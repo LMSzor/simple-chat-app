@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SocketGM</title>
+</head>
+<body>
+    <h1>Simple Socket Chat</h1>
+
+    <section id="chat">
+        <div id="messagesContainer"></div>
+
+        <form id="messageForm">
+            <label for="messageInput">Your Message:</label>
+            <input type="text" id="messageInput" name="message">
+            <input type="submit">
+        </form>
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
+    <script>
+        const socket = io();
+
+        socket.on('serverLog', data => {
+            console.log(data);
+        });
+
+        socket.on('error', () => {
+            console.log('Communication Error.');
+        });
+
+        socket.on('receiveMessage', data => {
+            const messagesContainer = document.getElementById('messagesContainer');
+
+            const messageTemplate = document.createElement('p');
+            messageTemplate.appendChild(
+                document.createTextNode(data)
+            );
+
+            messagesContainer.appendChild(messageTemplate);
+        });
+
+        document.getElementById('messageForm').addEventListener('submit', event => {
+            event.preventDefault();
+
+            console.log(document.getElementById('messageInput'));
+
+            socket.emit('sendMessage', document.getElementById('messageInput').value);
+        });
+    </script>
+</body>
+</html>
