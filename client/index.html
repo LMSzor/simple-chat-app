@@ -21,29 +21,22 @@
     <script>
         const socket = io();
 
-        socket.on('serverLog', data => {
-            console.log(data);
-        });
-
         socket.on('error', () => {
             console.log('Communication Error.');
         });
 
-        socket.on('receiveMessage', data => {
-            const messagesContainer = document.getElementById('messagesContainer');
-
+        socket.on('receiveMessage', data => {;
             const messageTemplate = document.createElement('p');
             messageTemplate.appendChild(
                 document.createTextNode(data)
             );
 
+            const messagesContainer = document.getElementById('messagesContainer')
             messagesContainer.appendChild(messageTemplate);
         });
 
         document.getElementById('messageForm').addEventListener('submit', event => {
             event.preventDefault();
-
-            console.log(document.getElementById('messageInput'));
 
             socket.emit('sendMessage', document.getElementById('messageInput').value);
         });

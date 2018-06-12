@@ -19,11 +19,6 @@ io.sockets.on('connection', socket => {
     console.log('User connected to server.');
 
     socket.id = Math.random();
-    socket.x = 0;
-    socket.y = 0;
-
-    console.log(socket.id);
-
     activeConnections[socket.id] = socket;
 
     socket.on('disconnect', () => {
@@ -32,15 +27,6 @@ io.sockets.on('connection', socket => {
 
     socket.on('error', () => {
         console.log('Communication Error.');
-    });
-
-    socket.on('clientLog', data => {
-        console.log(data);
-    });
-
-    socket.emit('serverLog', {
-        connectionID: socket.id,
-        activeConnectionsCount: activeConnections.length
     });
 
     socket.on('sendMessage', data => {
