@@ -25,7 +25,7 @@
             console.log('Communication Error.');
         });
 
-        socket.on('receiveMessage', data => {;
+        socket.on('receiveMessage', data => {
             const messageTemplate = document.createElement('p');
             messageTemplate.appendChild(
                 document.createTextNode(data)
